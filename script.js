@@ -53,11 +53,18 @@ async function detectFaces() {
 
     if (video.readyState === 4) { // video ready
         const predictions = await detector.estimateFaces(video, false);
+
         // Log face count for debugging
         console.log("Faces detected:", predictions.length);
 
         if (predictions.length > 1) {
+            // Show in-page popup
             alertBox.style.display = "block";
+
+            // Vibrate if device supports it
+            if (navigator.vibrate) {
+                navigator.vibrate([200, 100, 200]); // vibrate pattern
+            }
         } else {
             alertBox.style.display = "none";
         }
