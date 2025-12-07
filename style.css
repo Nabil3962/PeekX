@@ -1,0 +1,44 @@
+body {
+    margin: 0;
+    background: #0d0d0d;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    color: #fff;
+}
+
+.container {
+    padding: 20px;
+}
+
+video {
+    width: 90%;
+    max-width: 400px;
+    border-radius: 15px;
+    border: 2px solid #00ffa6;
+    margin-top: 20px;
+}
+
+#alertBox {
+    margin-top: 20px;
+    padding: 15px;
+    background: red;
+    color: white;
+    font-size: 20px;
+    border-radius: 10px;
+    display: none;
+}
+
+.install-btn {
+    margin-top: 25px;
+    padding: 12px 20px;
+    background: #00ffa6;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    color: #000;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none !important;
+}
