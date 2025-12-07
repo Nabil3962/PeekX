@@ -22,51 +22,46 @@ installBtn.addEventListener("click", async () => {
 async function startCamera() {
     try {
         const stream = await navigator.mediaDevices.getUserMedia({
-            video: { facingMode: "user" }
+            video: { facingMode: "user", width: 640, height: 480 }
         });
         video.srcObject = stream;
+        video.onloadedmetadata = () => {
+            video.play();
+            detectFaces(); // start detection after video is ready
+        };
     } catch (err) {
         alert("Camera permission needed.");
+        console.error(err);
     }
 }
 
 startCamera();
 
-// ===== Face Detection Logic =====
-let useFaceAPI = true;
+// ===== BlazeFace Face Detector =====
 let detector = null;
 
 async function initDetector() {
-    if ("FaceDetector" in window) {
-        detector = new FaceDetector({ fastMode: true, maxDetectedFaces: 5 });
-    } else {
-        useFaceAPI = false;
-        detector = await blazeface.load();
-    }
+    detector = await blazeface.load();
+    console.log("BlazeFace loaded.");
 }
 
 initDetector();
 
-async function detectLoop() {
-    if (!detector) return requestAnimationFrame(detectLoop);
+// ===== Detection Loop =====
+async function detectFaces() {
+    if (!detector) return requestAnimationFrame(detectFaces);
 
-    let faces = [];
+    if (video.readyState === 4) { // video ready
+        const predictions = await detector.estimateFaces(video, false);
+        // Log face count for debugging
+        console.log("Faces detected:", predictions.length);
 
-    try {
-        if (useFaceAPI) {
-            faces = await detector.detect(video);
+        if (predictions.length > 1) {
+            alertBox.style.display = "block";
         } else {
-            faces = await detector.estimateFaces(video, false);
+            alertBox.style.display = "none";
         }
-    } catch (e) { }
-
-    if (faces.length > 1) {
-        alertBox.style.display = "block";
-    } else {
-        alertBox.style.display = "none";
     }
 
-    requestAnimationFrame(detectLoop);
+    requestAnimationFrame(detectFaces);
 }
-
-detectLoop();
