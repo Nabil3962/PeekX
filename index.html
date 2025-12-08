@@ -1,35 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Look Alert App</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Look Alert App</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css" />
 
-    <link rel="manifest" href="manifest.json" />
-    <link rel="stylesheet" href="style.css"/>
-
-    <script>
-        if ("serviceWorker" in navigator) {
-            navigator.serviceWorker.register("service-worker.js");
-        }
-    </script>
+  <!-- Face API -->
+  <script defer src="https://unpkg.com/face-api.js"></script>
+  <script defer src="script.js"></script>
 </head>
 <body>
 
 <div class="container">
     <h1>Look Alert App</h1>
-    <video id="camera" autoplay playsinline></video>
+    <video id="camera" autoplay muted playsinline></video>
 
     <div id="alertBox" class="hidden">
         👀 Another person detected!
     </div>
-
-    <button id="installBtn" class="install-btn hidden">Install App</button>
 </div>
 
-<script src="script.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.21.0"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/blazeface"></script>
 </body>
 </html>
